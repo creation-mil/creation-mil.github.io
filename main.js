@@ -4,6 +4,11 @@ let totalElapsedTime = 0;
 let startTime = null;
 let stopTime = null;
 
+// variables to track the timestamp of each timer.
+let totalElapsedTimeStartTimestamp = null;
+let totalProcessTimeStartTimestamp = null;
+
+// constants
 const MILISECONDS_PER_HOUR = 3600000;
 
 /** 
@@ -12,12 +17,22 @@ const MILISECONDS_PER_HOUR = 3600000;
 function startTimer() {
     if (timerInterval !== null) return; // Prevent multiple intervals
 
-    startTime = new Date(); // log the time which the start button was clicked.
-    const startTimestamp = startTime.getTime();
+    let timestamp = new Date().getTime();
+
+    // Update the total elapsed time timestamp if we have not started a timer yet.
+    if (totalElapsedTimeStartTimestamp === null) {
+        totalElapsedTimeStartTimestamp = timestamp;
+    }
+
+    // Update the current process time timestamp
+    totalProcessTimeStartTimestamp = timestamp;
 
     timerInterval = setInterval(() => {
-        totalElapsedTime = Date.now() - startTimestamp;
+        totalElapsedTime = Date.now() - totalElapsedTimeStartTimestamp;
+        totalProcessTime = Date.now() - totalProcessTimeStartTimestamp;
+        
         document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(totalElapsedTime);
+        document.getElementById('stopwatch-current-process-time').innerText = timeToString(totalProcessTime);
     }, 50);
 }
 
