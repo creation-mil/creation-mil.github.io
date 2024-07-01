@@ -1,6 +1,6 @@
 // define variables for updating timer displayed on client.
 let timerInterval = null;
-let elapsedTime = 0;
+let totalElapsedTime = 0;
 let startTime = null;
 let stopTime = null;
 
@@ -16,8 +16,8 @@ function startTimer() {
     const startTimestamp = startTime.getTime();
 
     timerInterval = setInterval(() => {
-        elapsedTime = Date.now() - startTimestamp;
-        document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(elapsedTime);
+        totalElapsedTime = Date.now() - startTimestamp;
+        document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(totalElapsedTime);
     }, 50);
 }
 
@@ -35,13 +35,13 @@ function stopTimer() {
     const newRow = logTable.insertRow();
     newRow.insertCell(0).textContent = startTime.toLocaleTimeString();
     newRow.insertCell(1).textContent = stopTime.toLocaleTimeString();
-    newRow.insertCell(2).textContent = timeToString(elapsedTime);
+    newRow.insertCell(2).textContent = timeToString(totalElapsedTime);
 }
 
 function resetTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    elapsedTime = 0;
+    totalElapsedTime = 0;
     document.getElementById('timer').textContent = '00:00:00';
 }
 
