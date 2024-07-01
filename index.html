@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Work Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            margin: 20px;
+        }
+        button {
+            font-size: 24px;
+            margin: 10px;
+            padding: 10px 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Work Timer</h1>
+    <div id="timer">00:00:00</div>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Start Time</th>
+                <th>Stop Time</th>
+                <th>Total Time</th>
+            </tr>
+        </thead>
+        <tbody id="logTable">
+            <!-- Log entries will go here -->
+        </tbody>
+    </table>
+
+    <script>
+        let timerInterval;
+        let elapsedTime = 0;
+        let startTime;
+        let stopTime;
+
+        function startTimer() {
+            if (timerInterval) return; // Prevent multiple intervals
+            startTime = new Date();
+            const startTimestamp = startTime.getTime();
+
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTimestamp;
+                document.getElementById('timer').textContent = timeToString(elapsedTime);
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (!timerInterval) return;
+            clearInterval(timerInterval);
+            timerInterval = null;
+            stopTime = new Date();
+
+            // Log the start time, stop time, and total time
+            const logTable = document.getElementById('logTable');
+            const newRow = logTable.insertRow();
+            newRow.insertCell(0).textContent = startTime.toLocaleTimeString();
+            newRow.insertCell(1).textContent = stopTime.toLocaleTimeString();
+            newRow.insertCell(2).textContent = timeToString(elapsedTime);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            elapsedTime = 0;
+            document.getElementById('timer').textContent = '00:00:00';
+        }
+
+        function timeToString(time) {
+            let diffInHrs = time / 3600000;
+            let hh = Math.floor(diffInHrs);
+
+            let diffInMin = (diffInHrs - hh) * 60;
+            let mm = Math.floor(diffInMin);
+
+            let diffInSec = (diffInMin - mm) * 60;
+            let ss = Math.floor(diffInSec);
+
+            let formattedHH = hh.toString().padStart(2, "0");
+            let formattedMM = mm.toString().padStart(2, "0");
+            let formattedSS = ss.toString().padStart(2, "0");
+
+            return `${formattedHH}:${formattedMM}:${formattedSS}`;
+        }
+    </script>
+</body>
+</html>
