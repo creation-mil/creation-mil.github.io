@@ -40,13 +40,21 @@ function resetTimer() {
     document.getElementById('timer').textContent = '00:00:00';
 }
 
+/**
+ * This function converts a given time from Javascript's Date object, and returns it as a human-readable formatted String.
+ * @param {double} time 
+ * @returns {String} The formatted time as a string.  
+ */
 function timeToString(time) {
-    let diffInHrs = time / 3600000;
+    // get the elapsed total hours as a decimal number.
+    let diffInHrs = time / MILISECONDS_PER_HOUR;
     let hh = Math.floor(diffInHrs);
 
+    // get the elapsed total minutes
     let diffInMin = (diffInHrs - hh) * 60;
     let mm = Math.floor(diffInMin);
 
+    // get the elapsed total seconds
     let diffInSec = (diffInMin - mm) * 60;
     let ss = Math.floor(diffInSec);
 
