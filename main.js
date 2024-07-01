@@ -74,8 +74,8 @@ function timeToString(time) {
 
 /**
  * This function invokes a browser download of any specified text file and allows for naming the text file.
- * @param {String} filename 
- * @param {String} text 
+ * @param {String} filename String of the filename of the downloaded file.
+ * @param {String} text String of the text included in the filename.
  */
 function download(filename, text) {
     var element = document.createElement('a');
