@@ -29,10 +29,18 @@
 
     </div>
 
+    <div id="process-display-container">
+        <h2>Current IPN: <span></span></h2>
+        <h2>Current Station: <span></span></h2>
+        <button>Set IPN</button>
+        <button>Set Station</button>
+    </div>
+
     <div id="stopwatch-controls-container">
         <button onclick="startTimer()">Start New Process</button>
-        <button onclick="stopTimer()">Pause</button>
-        <button onclick="resetTimer()">Reset</button>
+        <button onclick="pauseTimer()">Pause</button>
+        <button onclick="stopTimer()">Reset</button>
+        <button onclick="exportToCSV()">Send Times to THE BIG MAN LARS</button>
     </div>
 
     <div id="entries-table-container">
@@ -50,6 +58,7 @@
         </table>
     </div>
 
+    <script src="js/Timer.js"></script>
     <script src="js/main.js"></script>
 </body>
 

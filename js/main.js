@@ -4,60 +4,86 @@ let totalElapsedTime = 0;
 let startTime = null;
 let stopTime = null;
 
-// variables to track the timestamp of each timer.
-let totalElapsedTimeStartTimestamp = null;
-let totalProcessTimeStartTimestamp = null;
+let elapsedTimer = new Timer();
+let currentProcessTimer = new Timer();
+
+let table = []
+
+function TableEntry() {
+    this.startTime;
+    this.endTime;
+    this.totalTime;
+};
 
 // constants
 const MILISECONDS_PER_HOUR = 3600000;
+const TIMER_UPDATE_INTERVAL_MILISECONDS = 50;
+
+timerInterval = setInterval(() => {
+    document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(elapsedTimer.getElapsedTime());
+    document.getElementById('stopwatch-current-process-time').innerText = timeToString(currentProcessTimer.getElapsedTime());
+}, TIMER_UPDATE_INTERVAL_MILISECONDS);
 
 /** 
  *  This function logs the time this function was called and consistently updates an elapsed time variable.
  */
 function startTimer() {
-    if (timerInterval !== null) return; // Prevent multiple intervals
 
-    let timestamp = new Date().getTime();
+    // first we need to log the previous entry
+    if (elapsedTimer.isActive()) {
 
-    // Update the total elapsed time timestamp if we have not started a timer yet.
-    if (totalElapsedTimeStartTimestamp === null) {
-        totalElapsedTimeStartTimestamp = timestamp;
+        // get the start, stop, and elapsed times. Format them
+
+        let entry = new TableEntry();
+        let stopTime = new Date(Date.now()).toLocaleTimeString();
+        let elapsedTime = timeToString(currentProcessTimer.getElapsedTime());
+        let startTime = new Date(Date.now() - currentProcessTimer.getElapsedTime()).toLocaleTimeString();
+
+        entry.startTime = startTime;
+        entry.stopTime = stopTime;
+        entry.elapsedTime = elapsedTime;
+        
+        table.push(entry);
+    
+        insertRowIntoTable(document.getElementById('entries-table'), entry);
     }
 
-    // Update the current process time timestamp
-    totalProcessTimeStartTimestamp = timestamp;
+    // if the elapsed timer is inactive, or it is paused, start the timer (which also resets it.)
+    // this is used to keep track of the total elapsed time without erasing it.
+    if (!elapsedTimer.isActive() || elapsedTimer.isPaused()) {
+        elapsedTimer.start();
+    }
 
-    timerInterval = setInterval(() => {
-        totalElapsedTime = Date.now() - totalElapsedTimeStartTimestamp;
-        totalProcessTime = Date.now() - totalProcessTimeStartTimestamp;
-        
-        document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(totalElapsedTime);
-        document.getElementById('stopwatch-current-process-time').innerText = timeToString(totalProcessTime);
-    }, 50);
+    // check if the elapsed timer has ever been used.
+    if (currentProcessTimer.isActive()) currentProcessTimer.stop();
+
+    currentProcessTimer.start();
+}
+
+/**
+ * This function pauses the timer.
+ */
+function pauseTimer() {
+    elapsedTimer.pause();
+    currentProcessTimer.pause();
 }
 
 /**
  * This function stops the timer and inputs the elapsed time into the entry table.
  */
 function stopTimer() {
-    if (!timerInterval) return; // Prevent stopping a nonexistent IntervalID
-    clearInterval(timerInterval);
-    timerInterval = null;
-    stopTime = new Date();
-
-    // Log the start time, stop time, and total time
-    const logTable = document.getElementById('logTable');
-    const newRow = logTable.insertRow();
-    newRow.insertCell(0).textContent = startTime.toLocaleTimeString();
-    newRow.insertCell(1).textContent = stopTime.toLocaleTimeString();
-    newRow.insertCell(2).textContent = timeToString(totalElapsedTime);
+    elapsedTimer.stop();
+    currentProcessTimer.stop();
 }
 
-function resetTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    totalElapsedTime = 0;
-    document.getElementById('timer').textContent = '00:00:00';
+function insertRowIntoTable(DOMReference, entry) {
+    if (DOMReference.tagName.toLowerCase() !== "table") throw new DOMException.INVALID_NODE_TYPE_ERR;
+
+    let newRow = DOMReference.tBodies[0].insertRow();
+
+    newRow.insertCell(0).textContent = entry.startTime;
+    newRow.insertCell(1).textContent = entry.stopTime;
+    newRow.insertCell(2).textContent = entry.elapsedTime;
 }
 
 /**
@@ -106,4 +132,13 @@ function download(filename, text) {
     element.click();
 
     document.body.removeChild(element);
+}
+
+/**
+ * Exports all entries in the time table to a csv file.
+ */
+function exportEntryTableToCSV() {
+    csvBuilder = "";
+
+
 }
