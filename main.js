@@ -17,7 +17,7 @@ function startTimer() {
 
     timerInterval = setInterval(() => {
         elapsedTime = Date.now() - startTimestamp;
-        document.getElementById('timer').textContent = timeToString(elapsedTime);
+        document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(elapsedTime);
     }, 50);
 }
 
