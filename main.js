@@ -4,6 +4,8 @@ let elapsedTime = 0;
 let startTime = null;
 let stopTime = null;
 
+const MILISECONDS_PER_HOUR = 3600000;
+
 /** 
  *  This function logs the time this function was called and consistently updates an elapsed time variable.
  */
