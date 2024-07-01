@@ -14,7 +14,7 @@ function startTimer() {
     timerInterval = setInterval(() => {
         elapsedTime = Date.now() - startTimestamp;
         document.getElementById('timer').textContent = timeToString(elapsedTime);
-    }, 1000);
+    }, 50);
 }
 
 function stopTimer() {
