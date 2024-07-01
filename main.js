@@ -1,14 +1,16 @@
-let timerInterval;
+// define variables for updating timer displayed on client.
+let timerInterval = null;
 let elapsedTime = 0;
-let startTime;
-let stopTime;
+let startTime = null;
+let stopTime = null;
 
 /** 
  *  This function logs the time this function was called and consistently updates an elapsed time variable.
- */ 
+ */
 function startTimer() {
-    if (timerInterval) return; // Prevent multiple intervals
-    startTime = new Date();
+    if (timerInterval === null) return; // Prevent multiple intervals
+
+    startTime = new Date(); // log the time which the start button was clicked.
     const startTimestamp = startTime.getTime();
 
     timerInterval = setInterval(() => {
