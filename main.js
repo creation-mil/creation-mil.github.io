@@ -71,3 +71,21 @@ function timeToString(time) {
 
     return `${formattedHH}:${formattedMM}:${formattedSS}.${formattedTSS}`;
 }
+
+/**
+ * This function invokes a browser download of any specified text file and allows for naming the text file.
+ * @param {String} filename 
+ * @param {String} text 
+ */
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
