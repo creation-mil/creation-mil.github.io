@@ -20,18 +20,18 @@
     <div id="stopwatch-display-container">
         <div>
             <h2>Total Elapsed Time</h2>
-            <p>0:00:00.0</p>
+            <p id="stopwatch-total-elapsed-time">0:00:00.0</p>
         </div>
         <div>
             <h2>Current Process</h2>
-            <p>0:00:00.0</p>
+            <p id="stopwatch-current-process-time">0:00:00.0</p>
         </div>
 
     </div>
 
     <div id="stopwatch-controls-container">
-        <button onclick="startTimer()">Start</button>
-        <button onclick="stopTimer()">Stop</button>
+        <button onclick="startTimer()">Start New Process</button>
+        <button onclick="stopTimer()">Pause</button>
         <button onclick="resetTimer()">Reset</button>
     </div>
 
