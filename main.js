@@ -50,9 +50,14 @@ function timeToString(time) {
     let diffInSec = (diffInMin - mm) * 60;
     let ss = Math.floor(diffInSec);
 
+    // get the elapsed total tenth of seconds
+    let diffInTenthSec = (diffInSec - ss) * 10;
+    let tss = Math.floor(diffInTenthSec);
+
     let formattedHH = hh.toString().padStart(2, "0");
     let formattedMM = mm.toString().padStart(2, "0");
     let formattedSS = ss.toString().padStart(2, "0");
+    let formattedTSS = tss.toString().padStart(1,"0");
 
-    return `${formattedHH}:${formattedMM}:${formattedSS}`;
+    return `${formattedHH}:${formattedMM}:${formattedSS}.${formattedTSS}`;
 }
