@@ -140,5 +140,12 @@ function download(filename, text) {
 function exportEntryTableToCSV() {
     csvBuilder = "";
 
+    csvBuilder += "Start Time" + "," + "Stop Time" + "," + "Elapsed Time" + "\n";
+
+    table.forEach(e => {
+        csvBuilder += e.startTime + "," + e.stopTime + "," + e.elapsedTime + "\n";
+    });
+
+    download("export.csv",csvBuilder);
 
 }
