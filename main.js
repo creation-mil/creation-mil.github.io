@@ -21,8 +21,11 @@ function startTimer() {
     }, 50);
 }
 
+/**
+ * This function stops the timer and inputs the elapsed time into the entry table.
+ */
 function stopTimer() {
-    if (!timerInterval) return;
+    if (!timerInterval) return; // Prevent stopping a nonexistent IntervalID
     clearInterval(timerInterval);
     timerInterval = null;
     stopTime = new Date();
