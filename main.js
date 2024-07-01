@@ -3,6 +3,9 @@ let elapsedTime = 0;
 let startTime;
 let stopTime;
 
+/** 
+ *  This function logs the time this function was called and consistently updates an elapsed time variable.
+ */ 
 function startTimer() {
     if (timerInterval) return; // Prevent multiple intervals
     startTime = new Date();
