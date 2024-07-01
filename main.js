@@ -10,7 +10,7 @@ const MILISECONDS_PER_HOUR = 3600000;
  *  This function logs the time this function was called and consistently updates an elapsed time variable.
  */
 function startTimer() {
-    if (timerInterval === null) return; // Prevent multiple intervals
+    if (timerInterval !== null) return; // Prevent multiple intervals
 
     startTime = new Date(); // log the time which the start button was clicked.
     const startTimestamp = startTime.getTime();
