@@ -13,24 +13,42 @@
 </head>
 
 <body>
-    <h1>Work Timer</h1>
-    <div id="timer">00:00:00</div>
-    <button onclick="startTimer()">Start</button>
-    <button onclick="stopTimer()">Stop</button>
-    <button onclick="resetTimer()">Reset</button>
+    <div id="head-container">
+        <h1>Work Timer</h1>
+    </div>
+    
+    <div id="stopwatch-display-container">
+        <div>
+            <h2>Total Elapsed Time</h2>
+            <p>00:00:00</p>
+        </div>
+        <div>
+            <h2>Current Process</h2>
+            <p>00:00:00</p>
+        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Start Time</th>
-                <th>Stop Time</th>
-                <th>Total Time</th>
-            </tr>
-        </thead>
-        <tbody id="logTable">
-            <!-- Log entries will go here -->
-        </tbody>
-    </table>
+    </div>
+
+    <div id="stopwatch-controls-container">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <div id="entries-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Start Time</th>
+                    <th>Stop Time</th>
+                    <th>Total Time</th>
+                </tr>
+            </thead>
+            <tbody id="logTable">
+                <!-- Log entries will go here -->
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
