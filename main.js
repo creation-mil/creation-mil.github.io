@@ -64,7 +64,7 @@ function timeToString(time) {
     let diffInTenthSec = (diffInSec - ss) * 10;
     let tss = Math.floor(diffInTenthSec);
 
-    let formattedHH = hh.toString().padStart(2, "0");
+    let formattedHH = hh.toString().padStart(1, "0");
     let formattedMM = mm.toString().padStart(2, "0");
     let formattedSS = ss.toString().padStart(2, "0");
     let formattedTSS = tss.toString().padStart(1,"0");
