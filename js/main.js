@@ -33,7 +33,7 @@ timerInterval = setInterval(() => {
 function startTimer() {
 
     // first we need to log the previous entry
-    if (elapsedTimer.isActive()) {
+    if (elapsedTimer.isActive() && !elapsedTimer.isPaused()) {
 
         // get the start, stop, and elapsed times. Format them
 
@@ -58,7 +58,7 @@ function startTimer() {
     }
 
     // check if the elapsed timer has ever been used.
-    if (currentProcessTimer.isActive()) currentProcessTimer.stop();
+    if (currentProcessTimer.isActive() && !currentProcessTimer.isPaused()) currentProcessTimer.stop();
 
     currentProcessTimer.start();
 
