@@ -22,11 +22,6 @@ function TableEntry() {
 const MILISECONDS_PER_HOUR = 3600000;
 const TIMER_UPDATE_INTERVAL_MILISECONDS = 50;
 
-timerInterval = setInterval(() => {
-    document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(elapsedTimer.getElapsedTime());
-    document.getElementById('stopwatch-current-process-time').innerText = timeToString(currentProcessTimer.getElapsedTime());
-}, TIMER_UPDATE_INTERVAL_MILISECONDS);
-
 /** 
  *  This function logs the time this function was called and consistently updates an elapsed time variable.
  */
