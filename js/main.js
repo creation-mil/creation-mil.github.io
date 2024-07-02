@@ -155,7 +155,29 @@ function exportEntryTableToCSV() {
         csvBuilder += e.startTime + "," + e.stopTime + "," + e.elapsedTime + "\n";
     });
 
-    download("export.csv",csvBuilder);
+    download("export.csv",csvBuilder);123
+
+}
+
+function clearEntryTable() {
+    let entriesTable = document.getElementById('entries-table');
+    console.log("function");
+
+    while (entriesTable.rows.length > 1) {
+        entriesTable.deleteRow(-1);
+    }
+}
+
+
+function sanitizeString(str) {
+
+    if (str === null) {
+        return "";
+    }
+
+    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "");
+    return str.trim();
+}
 
 function setIpnEventHandler() {
     let ipn = window.prompt("Enter IPN:");
