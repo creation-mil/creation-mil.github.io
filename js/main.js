@@ -147,12 +147,18 @@ function download(filename, text) {
  * Exports all entries in the time table to a csv file.
  */
 function exportEntryTableToCSV() {
+    if (ipnString.trim() === "" || stationString.trim() === "") {
+        window.alert("IPN and Station Name must not be blank!");
+        return;
+    }
+
+    
     csvBuilder = "";
 
-    csvBuilder += "Start Time" + "," + "Stop Time" + "," + "Elapsed Time" + "\n";
+    csvBuilder += "IPN" + "," + "Station Name" + "," + "Start Time" + "," + "Stop Time" + "," + "Elapsed Time" + "\n";
 
     table.forEach(e => {
-        csvBuilder += e.startTime + "," + e.stopTime + "," + e.elapsedTime + "\n";
+        csvBuilder += ipnString + "," + stationString + "," + e.startTime + "," + e.stopTime + "," + e.elapsedTime + "\n";
     });
 
     download("export.csv",csvBuilder);123
