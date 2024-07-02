@@ -61,6 +61,8 @@ function startTimer() {
     if (currentProcessTimer.isActive()) currentProcessTimer.stop();
 
     currentProcessTimer.start();
+
+    updateStartButtonStatus();
 }
 
 /**
@@ -69,6 +71,8 @@ function startTimer() {
 function pauseTimer() {
     elapsedTimer.pause();
     currentProcessTimer.pause();
+
+    updateStartButtonStatus();
 }
 
 /**
@@ -77,6 +81,8 @@ function pauseTimer() {
 function stopTimer() {
     elapsedTimer.stop();
     currentProcessTimer.stop();
+
+    updateStartButtonStatus();
 }
 
 function insertRowIntoTable(DOMReference, entry) {
@@ -169,6 +175,18 @@ function setStationNameEventHandler() {
     stationString = stationName;
 }
 
+function updateStartButtonStatus() {
+
+    let button = document.getElementById('start-button');
+
+    switch (currentProcessTimer.isPaused()) {
+        case (true):
+            button.innerText = "Resume";
+            break;
+        case (false):
+            button.innerText = "Start New Process";
+    }
+}
     // Event listeners for buttons
     document.getElementById('start-button').addEventListener('click', startTimer);
     document.getElementById('pause-button').addEventListener('click', pauseTimer);
