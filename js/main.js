@@ -209,6 +209,8 @@ function updateStartButtonStatus() {
             button.innerText = "Start New Process";
     }
 }
+
+function init() {
     // Event listeners for buttons
     document.getElementById('start-button').addEventListener('click', startTimer);
     document.getElementById('pause-button').addEventListener('click', pauseTimer);
@@ -217,3 +219,12 @@ function updateStartButtonStatus() {
     document.getElementById('clear-button').addEventListener('click', clearEntryTable);
     document.getElementById('set-ipn-button').addEventListener('click', setIpnEventHandler);
     document.getElementById('set-station-button').addEventListener('click', setStationNameEventHandler);
+
+    // Interval to check timer status
+    timerInterval = setInterval(() => {
+        document.getElementById('stopwatch-total-elapsed-time').innerText = timeToString(elapsedTimer.getElapsedTime());
+        document.getElementById('stopwatch-current-process-time').innerText = timeToString(currentProcessTimer.getElapsedTime());
+    }, TIMER_UPDATE_INTERVAL_MILISECONDS);
+}
+
+document.addEventListener('DOMContentLoaded', init, false);
