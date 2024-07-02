@@ -9,6 +9,9 @@ let currentProcessTimer = new Timer();
 
 let table = []
 
+let ipnString = "";
+let stationString = "";
+
 function TableEntry() {
     this.startTime;
     this.endTime;
@@ -148,4 +151,29 @@ function exportEntryTableToCSV() {
 
     download("export.csv",csvBuilder);
 
+function setIpnEventHandler() {
+    let ipn = window.prompt("Enter IPN:");
+
+    ipn = sanitizeString(ipn);
+    ipn = ipn.toUpperCase();
+
+    ipnString = ipn;
 }
+
+function setStationNameEventHandler() {
+    let stationName = window.prompt("Enter Station Name:")
+
+    stationName = sanitizeString(stationName);
+    stationName.toLowerCase(stationName);
+
+    stationString = stationName;
+}
+
+    // Event listeners for buttons
+    document.getElementById('start-button').addEventListener('click', startTimer);
+    document.getElementById('pause-button').addEventListener('click', pauseTimer);
+    document.getElementById('reset-button').addEventListener('click', stopTimer);
+    document.getElementById('export-button').addEventListener('click', exportEntryTableToCSV);
+    document.getElementById('clear-button').addEventListener('click', clearEntryTable);
+    document.getElementById('set-ipn-button').addEventListener('click', setIpnEventHandler);
+    document.getElementById('set-station-button').addEventListener('click', setStationNameEventHandler);
