@@ -31,18 +31,18 @@ function startTimer() {
     if (elapsedTimer.isActive() && !elapsedTimer.isPaused()) {
 
         // get the start, stop, and elapsed times. Format them
-
         let entry = new TableEntry();
         let stopTime = new Date(Date.now()).toLocaleTimeString();
         let elapsedTime = timeToString(currentProcessTimer.getElapsedTime());
         let startTime = new Date(Date.now() - currentProcessTimer.getElapsedTime()).toLocaleTimeString();
 
+        // encapsulate times into an entry object and add to the table
         entry.startTime = startTime;
         entry.stopTime = stopTime;
         entry.elapsedTime = elapsedTime;
-        
         table.push(entry);
     
+        // update html to display new time entry.
         insertRowIntoTable(document.getElementById('entries-table'), entry);
     }
 
@@ -56,7 +56,6 @@ function startTimer() {
     if (currentProcessTimer.isActive() && !currentProcessTimer.isPaused()) currentProcessTimer.stop();
 
     currentProcessTimer.start();
-
     updateStartButtonStatus();
 }
 
@@ -66,7 +65,6 @@ function startTimer() {
 function pauseTimer() {
     elapsedTimer.pause();
     currentProcessTimer.pause();
-
     updateStartButtonStatus();
 }
 
@@ -76,15 +74,15 @@ function pauseTimer() {
 function stopTimer() {
     elapsedTimer.stop();
     currentProcessTimer.stop();
-
     updateStartButtonStatus();
 }
 
 function insertRowIntoTable(DOMReference, entry) {
+    // prevent non-table's from being passed through this function
     if (DOMReference.tagName.toLowerCase() !== "table") throw new DOMException.INVALID_NODE_TYPE_ERR;
 
+    // insert the entry into the table.
     let newRow = DOMReference.tBodies[0].insertRow();
-
     newRow.insertCell(0).textContent = entry.startTime;
     newRow.insertCell(1).textContent = entry.stopTime;
     newRow.insertCell(2).textContent = entry.elapsedTime;
@@ -126,13 +124,20 @@ function timeToString(time) {
  * @param {String} text String of the text included in the filename.
  */
 function download(filename, text) {
+
+    // create a link element to store text inside
     var element = document.createElement('a');
+
+    //encode URI blob
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+
+    // sets the name of the download
     element.setAttribute('download', filename);
 
     element.style.display = 'none';
     document.body.appendChild(element);
 
+    // force browser to "click" on the link and start the download
     element.click();
 
     document.body.removeChild(element);
@@ -142,6 +147,7 @@ function download(filename, text) {
  * Exports all entries in the time table to a csv file.
  */
 function exportEntryTableToCSV() {
+    // ensure ipn or station string are not blank.
     if (ipnString.trim() === "" || stationString.trim() === "") {
         window.alert("IPN and Station Name must not be blank!");
         return;
@@ -150,12 +156,15 @@ function exportEntryTableToCSV() {
     
     csvBuilder = "";
 
+    // Add the headers to the .csv string
     csvBuilder += "IPN" + "," + "Station Name" + "," + "Start Time" + "," + "Stop Time" + "," + "Elapsed Time" + "\n";
 
+    // For each entry in the table collection, add the comma separated values and a newline.
     table.forEach(e => {
         csvBuilder += ipnString + "," + stationString + "," + e.startTime + "," + e.stopTime + "," + e.elapsedTime + "\n";
     });
 
+    // prompt a browser download
     download("export.csv",csvBuilder);123
 
 }
@@ -164,6 +173,7 @@ function clearEntryTable() {
     let entriesTable = document.getElementById('entries-table');
     console.log("function");
 
+    // delete the last row until the header row remains.
     while (entriesTable.rows.length > 1) {
         entriesTable.deleteRow(-1);
     }
@@ -171,22 +181,28 @@ function clearEntryTable() {
 
 
 function sanitizeString(str) {
-
+    // prevent null strings from breaking stuff.
     if (str === null) {
         return "";
     }
 
+    // replace bad characters and trim whitespace.
     str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "");
     return str.trim();
 }
 
 function setIpnEventHandler() {
+    // prompt user for ipn
     let ipn = window.prompt("Enter IPN:");
 
+    // sanitize string and set it to the global ipn variable
     ipn = sanitizeString(ipn);
     ipn = ipn.toUpperCase();
-
     ipnString = ipn;
+
+    // Update the text displayed on the html page
+    document.getElementById('current-ipn-span').textContent = ipnString;
+
 }
 
 function setStationNameEventHandler() {
@@ -228,4 +244,5 @@ function init() {
     }, TIMER_UPDATE_INTERVAL_MILISECONDS);
 }
 
+// Wait for document load before executing code.
 document.addEventListener('DOMContentLoaded', init, false);
