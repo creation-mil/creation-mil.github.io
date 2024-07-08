@@ -206,12 +206,16 @@ function setIpnEventHandler() {
 }
 
 function setStationNameEventHandler() {
+    // prompt user for station name
     let stationName = window.prompt("Enter Station Name:")
 
+    // sanitize string and set it to the global station name var
     stationName = sanitizeString(stationName);
     stationName.toLowerCase(stationName);
-
     stationString = stationName;
+
+    // Update the text displayed on the html page
+    document.getElementById('current-station-span').textContent = stationString;
 }
 
 function updateStartButtonStatus() {
