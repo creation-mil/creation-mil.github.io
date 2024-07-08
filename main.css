@@ -1,19 +1,44 @@
+/* Set default font family and align all items center*/
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
+}
+
+/* Font sizing for timer-displays */
+#stopwatch-total-elapsed-time , #stopwatch-current-process-time {
+    font-size: 24px;
+    margin: 0.5em;
+}
+
+/* Set font sizes for different text elements */
+h1 {
+    font-size: 48px;
+    margin: 0.5em;
+}
+
+h2 {
+    font-size: 28px;
+    margin: 0.5em;
+}
+
+/* display timers inline with their respective titles */
+#stopwatch-display-container div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
-    font-size: 24px;
+    font-size: 20px;
     margin: 10px;
     padding: 10px 20px;
 }
 
+/* Combine table borders and distance table from the buttons */
 table {
     margin: 20px auto;
     border-collapse: collapse;
-    width: 80%;
+    width: 90%;
 }
 
 table,
@@ -22,6 +47,7 @@ td {
     border: 1px solid black;
 }
 
+/* Align table entries to the center of the cells, and add padding. */
 th,
 td {
     padding: 10px;
